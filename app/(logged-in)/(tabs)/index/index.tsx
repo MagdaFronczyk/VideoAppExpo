@@ -6,11 +6,14 @@ const Categories: React.FC = (): JSX.Element => {
   return (
     <View>
       <Text>Categories</Text>
-      <Link href="/search" asChild>
-        <Pressable
-          accessibilityLabel="Przejdź do wyszukiwarki"
-          accessibilityHint="Kieruje do wyszukiwarki"
-        >
+      <Link
+        href="/search"
+        asChild
+        accessibilityLabel="Go to search"
+        accessibilityHint="Takes you to the search screen"
+        accessibilityRole="button"
+      >
+        <Pressable>
           <Text>Go to search</Text>
         </Pressable>
       </Link>
@@ -20,19 +23,22 @@ const Categories: React.FC = (): JSX.Element => {
           params: { videoId: "123" },
         }}
         asChild
+        accessibilityLabel="Go to search of the category"
+        accessibilityHint="Takes you to the search screen of the category"
+        accessibilityRole="button"
       >
-        <Pressable
-          accessibilityLabel="Przejdź do wyszukiwarki danej kategorii"
-          accessibilityHint="Kieruje do wyszukiwarki danej katergorii"
-        >
+        <Pressable>
           <Text>Go to search with params</Text>
         </Pressable>
       </Link>
-      <Link href="../(settings)" asChild>
-        <Pressable
-          accessibilityLabel="Przejdź do ustawień"
-          accessibilityHint="Kieruje do ustawień"
-        >
+      <Link
+        href="../(settings)"
+        asChild
+        accessibilityLabel="Go to settings"
+        accessibilityHint="Takes you to the settings screen"
+        accessibilityRole="button"
+      >
+        <Pressable>
           <Text>Go to settings</Text>
         </Pressable>
       </Link>
@@ -42,11 +48,11 @@ const Categories: React.FC = (): JSX.Element => {
           params: { videoId: "123" },
         }}
         asChild
+        accessibilityLabel="Go to details"
+        accessibilityHint="Takes you to the details screen"
+        accessibilityRole="button"
       >
-        <Pressable
-          accessibilityLabel="Przejdź do szczegółów"
-          accessibilityHint="Kieruje do szczegółów nagrania"
-        >
+        <Pressable>
           <Text>Go to details with params</Text>
         </Pressable>
       </Link>

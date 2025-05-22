@@ -8,11 +8,14 @@ const NotFoundScreen: React.FC = (): JSX.Element => {
       <Stack.Screen options={{ title: "Oops!" }} />
       <View style={styles.container}>
         <Text>This screen does not exist.</Text>
-        <Link href="/" style={styles.link}>
-          <Pressable
-            accessibilityLabel="Kieruje do strony głównej"
-            accessibilityHint="Przejdź do strony głównej"
-          >
+        <Link
+          href="/"
+          style={styles.link}
+          accessibilityLabel="Go to home screen"
+          accessibilityHint="Takes you to the home screen"
+          accessibilityRole="button"
+        >
+          <Pressable>
             <Text>Go to home screen!</Text>
           </Pressable>
         </Link>
