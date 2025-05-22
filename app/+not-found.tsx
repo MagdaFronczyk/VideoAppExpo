@@ -1,19 +1,27 @@
 import { Link, Stack } from "expo-router";
-import { StyleSheet, Text, View } from "react-native";
+import React, { JSX } from "react";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
-export default function NotFoundScreen() {
+const NotFoundScreen: React.FC = (): JSX.Element => {
   return (
     <>
       <Stack.Screen options={{ title: "Oops!" }} />
       <View style={styles.container}>
         <Text>This screen does not exist.</Text>
         <Link href="/" style={styles.link}>
-          <Text>Go to home screen!</Text>
+          <Pressable
+            accessibilityLabel="Kieruje do strony głównej"
+            accessibilityHint="Przejdź do strony głównej"
+          >
+            <Text>Go to home screen!</Text>
+          </Pressable>
         </Link>
       </View>
     </>
   );
-}
+};
+
+export default NotFoundScreen;
 
 const styles = StyleSheet.create({
   container: {
