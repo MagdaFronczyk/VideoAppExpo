@@ -1,0 +1,21 @@
+import { JSX } from "react";
+import { ColorValue } from "react-native";
+import Svg, { Path } from "react-native-svg";
+
+type Props = {
+  color: ColorValue;
+};
+
+export const SearchIcon: React.FC<Props> = ({ color }): JSX.Element => {
+  return (
+    <Svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+      <Path
+        d="M18.0607 18.0815L25 25M21 11C21 16.5228 16.5228 21 11 21C5.47715 21 1 16.5228 1 11C1 5.47715 5.47715 1 11 1C16.5228 1 21 5.47715 21 11Z"
+        stroke={color}
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </Svg>
+  );
+};
