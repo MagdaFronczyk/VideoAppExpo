@@ -2,18 +2,16 @@ import { getAuth, signInAnonymously } from "@react-native-firebase/auth";
 import { Image } from "expo-image";
 import { useRouter } from "expo-router";
 import React, { JSX } from "react";
-import { Pressable, View } from "react-native";
+import { Pressable, StyleSheet, View } from "react-native";
+import { moderateScale } from "react-native-size-matters";
 //styles
 import { theme } from "@/constants/theme";
-import { index as styles } from "./_styles";
 //components
 import PoppinsRegular from "@/components/fonts/PoppinsRegular";
 import PoppinsSemiBold from "@/components/fonts/PoppinsSemiBold";
-import { useFirebaseUser } from "@/hooks/useFirebaseUser";
 
 const LogIn: React.FC = (): JSX.Element => {
   const router = useRouter();
-  const { user } = useFirebaseUser();
 
   const handleLogIn = () => {
     signInAnonymously(getAuth())
@@ -78,3 +76,32 @@ const LogIn: React.FC = (): JSX.Element => {
 };
 
 export default LogIn;
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: theme.color.gray,
+    flex: 1,
+    justifyContent: "space-around",
+    alignItems: "center",
+  },
+  logo: {
+    width: moderateScale(292),
+    height: moderateScale(116),
+  },
+  icon: { width: moderateScale(128), height: moderateScale(128) },
+  innerContainer: { paddingHorizontal: moderateScale(32) },
+  loginButton: {
+    backgroundColor: theme.color.darkBlue,
+    padding: moderateScale(12),
+    borderRadius: moderateScale(12),
+    alignItems: "center",
+    marginTop: moderateScale(20),
+  },
+  terms: {
+    paddingHorizontal: moderateScale(32),
+    marginTop: moderateScale(10),
+    textAlign: "center",
+    fontSize: theme.fontSize.thirteen,
+    color: theme.color.darkBlue,
+  },
+});
