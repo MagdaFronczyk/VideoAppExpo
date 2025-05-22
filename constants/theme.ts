@@ -1,10 +1,10 @@
 import { moderateScale } from "react-native-size-matters";
 export const theme = {
   color: {
-    gray: "rgba(141, 153, 174)",
-    white: "rgba(255, 255, 255)",
-    darkBlue: "rgba(43, 45, 66)",
-    lightGray: "rgba(200, 200, 200)",
+    gray: "rgb(141, 153, 174)",
+    white: "rgb(255, 255, 255)",
+    darkBlue: "rgb(43, 45, 66)",
+    lightGray: "rgb(200, 200, 200)",
     black: "rgb(0, 0, 0)",
   },
   fontSize: {

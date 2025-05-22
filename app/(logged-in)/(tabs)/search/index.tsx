@@ -24,16 +24,16 @@ const Search: React.FC = (): JSX.Element => {
           params: { videoId: "123" },
         }}
         asChild
+        accessibilityLabel="Go to details"
+        accessibilityHint="Takes you to the details screen"
+        accessibilityRole="button"
       >
-        <Pressable
-          accessibilityLabel="Przejdź do szczegółów"
-          accessibilityHint="Kieruje do szczegółów nagrania"
-        >
+        <Pressable>
           <Text>Go to details with params</Text>
         </Pressable>
       </Link>
       <Button
-        accessibilityLabel="Przejdź do moadla filtrów"
+        accessibilityLabel="Open filter modal"
         title="Show modal"
         onPress={toggleModal}
       />
@@ -52,7 +52,7 @@ const Search: React.FC = (): JSX.Element => {
       >
         <View style={{ width: 320, height: 400, backgroundColor: "#8D99AE" }}>
           <Button
-            accessibilityLabel="Zamyka modal filtrów"
+            accessibilityLabel="Close filter modal"
             title="Hide modal"
             onPress={toggleModal}
           />
