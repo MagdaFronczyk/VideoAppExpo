@@ -1,27 +1,24 @@
 import { getAuth, signInAnonymously } from "@react-native-firebase/auth";
 import { Image } from "expo-image";
-import { useFocusEffect, useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import React, { JSX } from "react";
 import { Pressable, View } from "react-native";
 //styles
-import PoppinsRegular from "@/components/fonts/PoppinsRegular";
-import PoppinsSemiBold from "@/components/fonts/PoppinsSemiBold";
 import { theme } from "@/constants/theme";
 import { index as styles } from "./_styles";
+//components
+import PoppinsRegular from "@/components/fonts/PoppinsRegular";
+import PoppinsSemiBold from "@/components/fonts/PoppinsSemiBold";
+import { useFirebaseUser } from "@/hooks/useFirebaseUser";
 
 const LogIn: React.FC = (): JSX.Element => {
   const router = useRouter();
-
-  useFocusEffect(
-    React.useCallback(() => {
-      //router.navigate("./(logged-in)");
-    }, [router])
-  );
+  const { user } = useFirebaseUser();
 
   const handleLogIn = () => {
     signInAnonymously(getAuth())
       .then(() => {
-        console.log("User signed in anonymously");
+        router.navigate("./(logged-in)");
       })
       .catch((error) => {
         if (error.code === "auth/operation-not-allowed") {
