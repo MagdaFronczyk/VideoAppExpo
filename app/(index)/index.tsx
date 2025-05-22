@@ -1,3 +1,4 @@
+import { getAuth, signInAnonymously } from "@react-native-firebase/auth";
 import { Image } from "expo-image";
 import { useFocusEffect, useRouter } from "expo-router";
 import React, { JSX } from "react";
@@ -17,7 +18,19 @@ const LogIn: React.FC = (): JSX.Element => {
     }, [router])
   );
 
-  const handleLogIn = () => {};
+  const handleLogIn = () => {
+    signInAnonymously(getAuth())
+      .then(() => {
+        console.log("User signed in anonymously");
+      })
+      .catch((error) => {
+        if (error.code === "auth/operation-not-allowed") {
+          console.log("Enable anonymous in your firebase console.");
+        }
+
+        console.error(error);
+      });
+  };
 
   return (
     <View style={styles.container}>

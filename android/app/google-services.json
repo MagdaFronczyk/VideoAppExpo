@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "368654292039",
+    "project_id": "videoappexpo-ca29f",
+    "storage_bucket": "videoappexpo-ca29f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:368654292039:android:85df2bf9d104a52699cd62",
+        "android_client_info": {
+          "package_name": "com.magdalenafronczyk.VideoAppExpo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDE8Q52Vg9VyLHysko2O6xNqjgYFmSs09I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
