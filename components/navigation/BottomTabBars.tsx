@@ -12,7 +12,6 @@ import { theme } from "../../constants/theme";
 import BottomNavigationIconSwitcher from "@/utils/BottomNavigationIconSwitcher";
 import BottomNavigationNameSwitcher from "@/utils/bottomNavigationNameSwitcher";
 import PoppinsMedium from "../fonts/PoppinsMedium";
-//utils
 
 const BottomTabBars: React.FC<BottomTabBarProps> = ({
   state,

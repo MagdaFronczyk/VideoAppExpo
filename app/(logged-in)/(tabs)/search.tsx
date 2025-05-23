@@ -1,19 +1,15 @@
 import { Link, useLocalSearchParams } from "expo-router";
-import React, { JSX, useEffect, useState } from "react";
+import React, { JSX, useState } from "react";
 import { Button, Pressable, Text, View } from "react-native";
 import Modal from "react-native-modal";
 
 const Search: React.FC = (): JSX.Element => {
-  const { videoId } = useLocalSearchParams();
+  const { sortBy, query, maxResults, nextPageToken } = useLocalSearchParams();
   const [isModalVisible, setModalVisible] = useState(false);
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
-
-  useEffect(() => {
-    console.log("Search params: ", videoId);
-  }, [videoId]);
 
   return (
     <View>
