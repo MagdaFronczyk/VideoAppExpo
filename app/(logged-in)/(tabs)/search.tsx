@@ -1,61 +1,216 @@
-import { Link, useLocalSearchParams } from "expo-router";
-import React, { JSX, useState } from "react";
-import { Button, Pressable, Text, View } from "react-native";
-import Modal from "react-native-modal";
+import { Image } from "expo-image";
+import { useLocalSearchParams } from "expo-router";
+import React, { JSX, useEffect, useState } from "react";
+import { Pressable, StyleSheet, TextInput, View } from "react-native";
+import { moderateScale } from "react-native-size-matters";
+//api
+import { COMMON_INIT_RESPONSE } from "@/api";
+import { getMoreYouTubeVideosBySearch } from "@/api/getMoreYouTubeVideoBySearch";
+import { getYouTubeVideosBySearch } from "@/api/getYouTubeVideosBySearch";
+//styles
+import { theme } from "@/constants/theme";
+//types
+import { ICommonResponse } from "@/types/api";
+import { status } from "@/types/enums";
+import { IVideo } from "@/types/videos";
+//components
+import PoppinsRegular from "@/components/fonts/PoppinsRegular";
+import PoppinsSemiBold from "@/components/fonts/PoppinsSemiBold";
+import FilterModal from "@/components/search/FilterModal";
+import SearchResults from "@/components/search/SearchResults";
 
 const Search: React.FC = (): JSX.Element => {
   const { sortBy, query, maxResults, nextPageToken } = useLocalSearchParams();
+
+  // Ensure params are always strings
+  const sortByStr = Array.isArray(sortBy) ? sortBy[0] : sortBy;
+  const queryStr = Array.isArray(query) ? query[0] : query;
+  const maxResultsStr = Array.isArray(maxResults) ? maxResults[0] : maxResults;
+  const nextPageTokenStr = Array.isArray(nextPageToken)
+    ? nextPageToken[0]
+    : nextPageToken;
+
   const [isModalVisible, setModalVisible] = useState(false);
+  const [searchText, setSearchText] = useState("");
+  const [videosResponse, setVideosResponse] =
+    useState<ICommonResponse<IVideo[] | null>>(COMMON_INIT_RESPONSE);
+  const [moreVideosResponse, setMoreVideosResponse] =
+    useState<ICommonResponse<IVideo[] | null>>(COMMON_INIT_RESPONSE);
+  const [filterBy, setFilterBy] = useState<string>("rating");
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
   };
 
+  useEffect(() => {
+    const abortController = new AbortController();
+    if (searchText.length) {
+      getYouTubeVideosBySearch(
+        setVideosResponse,
+        abortController,
+        filterBy,
+        searchText,
+        10
+      );
+      return () => {
+        abortController.abort();
+      };
+    }
+  }, [searchText, filterBy]);
+
+  useEffect(() => {
+    const abortController = new AbortController();
+    let checkAgain: number;
+    if (videosResponse.status === status.REJECTED && searchText.length) {
+      checkAgain = setTimeout(() => {
+        getYouTubeVideosBySearch(
+          setVideosResponse,
+          abortController,
+          filterBy,
+          searchText,
+          10
+        );
+      }, 15000);
+    }
+    return () => {
+      if (checkAgain) {
+        clearTimeout(checkAgain);
+        abortController.abort();
+      }
+    };
+  }, [videosResponse.status, searchText, filterBy]);
+
+  useEffect(() => {
+    const abortController = new AbortController();
+    if (sortByStr && queryStr && maxResultsStr && nextPageTokenStr) {
+      getMoreYouTubeVideosBySearch(
+        setMoreVideosResponse,
+        abortController,
+        sortByStr,
+        queryStr,
+        Number(maxResultsStr),
+        nextPageTokenStr
+      );
+      return () => {
+        abortController.abort();
+      };
+    }
+  }, [sortByStr, queryStr, maxResultsStr, nextPageTokenStr]);
+
+  useEffect(() => {
+    const abortController = new AbortController();
+    let checkAgain: number;
+    if (
+      moreVideosResponse.status === status.REJECTED &&
+      sortByStr &&
+      queryStr &&
+      maxResultsStr &&
+      nextPageTokenStr
+    ) {
+      checkAgain = setTimeout(() => {
+        getMoreYouTubeVideosBySearch(
+          setMoreVideosResponse,
+          abortController,
+          sortByStr,
+          queryStr,
+          Number(maxResultsStr),
+          nextPageTokenStr
+        );
+      }, 15000);
+    }
+    return () => {
+      if (checkAgain) {
+        clearTimeout(checkAgain);
+        abortController.abort();
+      }
+    };
+  }, [
+    searchText,
+    filterBy,
+    sortByStr,
+    queryStr,
+    maxResultsStr,
+    nextPageTokenStr,
+    moreVideosResponse.status,
+  ]);
+
   return (
-    <View>
-      <Text>Search</Text>
-      <Link
-        href={{
-          pathname: "../../(detailsModal)",
-          params: { videoId: "123" },
-        }}
-        asChild
-        accessibilityLabel="Go to details"
-        accessibilityHint="Takes you to the details screen"
-        accessibilityRole="button"
-      >
-        <Pressable>
-          <Text>Go to details with params</Text>
-        </Pressable>
-      </Link>
-      <Button
-        accessibilityLabel="Open filter modal"
-        title="Show modal"
-        onPress={toggleModal}
+    <View style={styles.container}>
+      <TextInput
+        style={styles.searchBar}
+        onChangeText={setSearchText}
+        value={searchText}
       />
-      <Modal
-        isVisible={isModalVisible}
-        style={{ margin: "auto" }}
-        customBackdrop={
-          <View
-            style={{
-              flex: 1,
-              backgroundColor: "black",
-              marginBottom: 120,
-            }}
-          ></View>
-        }
-      >
-        <View style={{ width: 320, height: 400, backgroundColor: "#8D99AE" }}>
-          <Button
-            accessibilityLabel="Close filter modal"
-            title="Hide modal"
-            onPress={toggleModal}
-          />
-        </View>
-      </Modal>
+      <Image
+        source={require("../../../assets/icons/search-icon.svg")}
+        style={styles.searchIcon}
+        contentFit="cover"
+        accessibilityLabel="Search icon"
+        accessibilityHint="Icon for search"
+      />
+      <Pressable onPress={toggleModal} style={styles.sortContainer}>
+        <PoppinsRegular styles={styles.sortBy}>Sort by:</PoppinsRegular>
+        <PoppinsSemiBold styles={styles.sortBy}>Most popular</PoppinsSemiBold>
+      </Pressable>
+      {sortByStr && queryStr && maxResultsStr && nextPageTokenStr ? (
+        <SearchResults videosResponse={moreVideosResponse} />
+      ) : (
+        <SearchResults videosResponse={videosResponse} />
+      )}
+      <FilterModal isModalVisible={isModalVisible} toggleModal={toggleModal} />
     </View>
   );
 };
 
 export default Search;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingHorizontal: moderateScale(24),
+    backgroundColor: theme.color.white,
+    paddingTop: moderateScale(10),
+  },
+  searchBar: {
+    width: "100%",
+    height: moderateScale(44),
+    borderRadius: moderateScale(16),
+    borderWidth: moderateScale(2),
+    borderColor: theme.color.darkBlue,
+    justifyContent: "center",
+    backgroundColor: "transparent",
+    textAlign: "center",
+    marginBottom: moderateScale(20),
+  },
+  searchIcon: {
+    height: moderateScale(24),
+    width: moderateScale(24),
+    position: "absolute",
+    left: moderateScale(38),
+    top: moderateScale(20),
+  },
+  pressableSearchBar: {
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignContent: "center",
+    alignItems: "center",
+  },
+  sortContainer: {
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    marginBottom: moderateScale(12),
+  },
+  sortBy: { fontSize: theme.fontSize.twelve, color: theme.color.darkBlue },
+  customBackDrop: {
+    flex: 1,
+    backgroundColor: "black",
+  },
+  modal: {
+    width: moderateScale(320),
+    height: moderateScale(400),
+    backgroundColor: theme.color.gray,
+    borderRadius: moderateScale(24),
+    paddingHorizontal: moderateScale(24),
+    paddingVertical: moderateScale(32),
+  },
+});

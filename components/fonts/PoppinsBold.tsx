@@ -7,7 +7,7 @@ type Props = {
   numberOfLines?: number;
 };
 
-const PoppinBold: React.FC<Props> = ({
+const PoppinsBold: React.FC<Props> = ({
   styles,
   children,
   numberOfLines,
@@ -26,4 +26,4 @@ const PoppinBold: React.FC<Props> = ({
     </Text>
   );
 };
-export default PoppinBold;
+export default PoppinsBold;

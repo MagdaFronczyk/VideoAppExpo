@@ -1,8 +1,8 @@
-const bottomNavigationNameSwitcher = (label): string => {
+const bottomNavigationNameSwitcher = (label: string): string => {
   switch (label) {
-    case "index/index":
+    case "index":
       return "home";
-    case "search/index":
+    case "search":
       return "search";
     default:
       return "home";

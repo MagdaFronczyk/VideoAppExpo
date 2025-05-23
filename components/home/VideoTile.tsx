@@ -36,8 +36,8 @@ const styles = StyleSheet.create({
   },
   description: {
     width: moderateScale(180),
-    fontSize: theme.fontSize.twelne,
-    lineHeight: theme.fontSize.twelne,
+    fontSize: theme.fontSize.twelve,
+    lineHeight: theme.fontSize.twelve,
     marginTop: moderateScale(5),
   },
 });

@@ -63,7 +63,6 @@ const styles = StyleSheet.create({
     borderRadius: moderateScale(16),
     borderWidth: moderateScale(2),
     borderColor: theme.color.darkBlue,
-
     justifyContent: "center",
   },
   searchIcon: {
