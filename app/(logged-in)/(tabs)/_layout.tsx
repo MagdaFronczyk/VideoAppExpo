@@ -6,11 +6,11 @@ import React, { JSX } from "react";
 const BOTTOM_TABS_DATA = [
   {
     name: "index",
-    title: "Kategorie",
+    title: "Home",
   },
   {
     name: "search",
-    title: "Szukaj",
+    title: "Search",
   },
 ];
 
@@ -24,13 +24,7 @@ const BottomTabsLayout: React.FC = (): JSX.Element => {
       tabBar={(props: BottomTabBarProps) => renderBottomBarComponent(props)}
     >
       {BOTTOM_TABS_DATA.map((tab) => {
-        return (
-          <Tabs.Screen
-            key={tab.title}
-            name={tab.name}
-            options={{ title: tab.title, tabBarLabel: tab.title }}
-          />
-        );
+        return <Tabs.Screen key={tab.title} name={tab.name} />;
       })}
     </Tabs>
   );
