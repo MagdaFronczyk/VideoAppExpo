@@ -25,7 +25,7 @@ type Props = {
   title: string;
 };
 
-const VideosCategories: React.FC<Props> = ({
+const SearchResults: React.FC<Props> = ({
   sortBy,
   query,
   maxResults,
@@ -40,11 +40,11 @@ const VideosCategories: React.FC<Props> = ({
     const abortController = new AbortController();
     getYouTubeVideosBySearch(
       setVideosResponse,
-      setNextPageToken,
       abortController,
       sortBy,
       query,
-      maxResults
+      maxResults,
+      setNextPageToken
     );
     return () => {
       abortController.abort();
@@ -58,11 +58,11 @@ const VideosCategories: React.FC<Props> = ({
       checkAgain = setTimeout(() => {
         getYouTubeVideosBySearch(
           setVideosResponse,
-          setNextPageToken,
           abortController,
           sortBy,
           query,
-          maxResults
+          maxResults,
+          setNextPageToken
         );
       }, 15000);
     }
@@ -124,11 +124,11 @@ const VideosCategories: React.FC<Props> = ({
   );
 };
 
-export default VideosCategories;
+export default SearchResults;
 
 const styles = StyleSheet.create({
   container: {
-    height: moderateScale(190),
+    flex: 1,
   },
   innerContainer: {
     marginTop: moderateScale(10),
@@ -140,7 +140,7 @@ const styles = StyleSheet.create({
     color: theme.color.darkBlue,
   },
   showMore: {
-    fontSize: theme.fontSize.twelne,
+    fontSize: theme.fontSize.twelve,
     color: theme.color.darkBlue,
     textDecorationStyle: "solid",
     textDecorationLine: "underline",

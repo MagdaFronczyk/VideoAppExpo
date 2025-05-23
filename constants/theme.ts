@@ -9,7 +9,7 @@ export const theme = {
   },
   fontSize: {
     ten: moderateScale(10),
-    twelne: moderateScale(12),
+    twelve: moderateScale(12),
     thirteen: moderateScale(13),
     fourteen: moderateScale(14),
     sixteen: moderateScale(16),

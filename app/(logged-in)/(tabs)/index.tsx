@@ -3,7 +3,7 @@ import { StyleSheet, View } from "react-native";
 import { moderateScale } from "react-native-size-matters";
 //components
 import SearchBarAndSettings from "@/components/home/SearchBarAndSettings";
-import VideosCategories from "@/components/home/VideosCategories";
+import SearchResults from "@/components/home/SearchResults";
 //styles
 import { theme } from "@/constants/theme";
 
@@ -11,19 +11,19 @@ const Categories: React.FC = (): JSX.Element => {
   return (
     <View style={styles.container}>
       <SearchBarAndSettings />
-      <VideosCategories
+      <SearchResults
         sortBy="rating"
         query={"reactnative"}
         maxResults={10}
         title={"React Native"}
       />
-      <VideosCategories
+      <SearchResults
         sortBy="rating"
         query={"reactjs"}
         maxResults={10}
         title={"React"}
       />
-      <VideosCategories
+      <SearchResults
         sortBy="rating"
         query={"typescript"}
         maxResults={10}

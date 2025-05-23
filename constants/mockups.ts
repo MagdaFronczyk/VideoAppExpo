@@ -1,6 +1,6 @@
 import { IVideoResponse } from "@/types/videos";
 
-const searchMockup: IVideoResponse = {
+export const searchMockup: IVideoResponse = {
   kind: "youtube#searchListResponse",
   etag: "fU_G8lI1gSzW1Q1nbOtANKeReN0",
   nextPageToken: "CDIQAA",

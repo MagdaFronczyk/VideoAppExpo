@@ -1,19 +1,22 @@
+import { API_KEY, YOU_TUBE_API_INSTANCE } from ".";
+//types
 import { ICommonResponse } from "@/types/api";
 import { status } from "@/types/enums";
 import { IVideo, IVideoResponse } from "@/types/videos";
-import { API_KEY, COMMON_ERROR_REPONSE, YOU_TUBE_API_INSTANCE } from ".";
+//constants
+import { searchMockup } from "@/constants/mockups";
 
 export const getYouTubeVideosBySearch = (
   setResponse: React.Dispatch<
     React.SetStateAction<ICommonResponse<IVideo[] | null>>
   >,
-  setNextPageToken: React.Dispatch<
-    React.SetStateAction<IVideoResponse["nextPageToken"]>
-  >,
   abortController: AbortController,
   sortBy: string,
   query: string,
-  maxResults: number
+  maxResults: number,
+  setNextPageToken?: React.Dispatch<
+    React.SetStateAction<IVideoResponse["nextPageToken"]>
+  >
 ): void => {
   YOU_TUBE_API_INSTANCE.get<IVideoResponse>(
     `/search?key=${API_KEY}&part=snippet&q=${query}&orderBy=${sortBy}&maxResults=${maxResults}`,
@@ -22,13 +25,19 @@ export const getYouTubeVideosBySearch = (
     }
   )
     .then((response) => {
-      setNextPageToken(response.data.nextPageToken);
+      if (setNextPageToken) {
+        setNextPageToken(response.data.nextPageToken);
+      }
       setResponse({
         status: status.RESOLVED,
         data: response.data.items,
       });
     })
     .catch(() => {
-      setResponse(COMMON_ERROR_REPONSE);
+      // setResponse(COMMON_ERROR_REPONSE);
+      setResponse({
+        status: status.RESOLVED,
+        data: searchMockup.items,
+      });
     });
 };
