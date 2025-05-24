@@ -9,8 +9,8 @@ import { theme } from "@/constants/theme";
 //types
 import { IVideo } from "@/types/videos";
 //components
-import PoppinsBold from "../fonts/PoppinsBold";
-import PoppinsRegular from "../fonts/PoppinsRegular";
+import PoppinsBold from "../_common/fonts/PoppinsBold";
+import PoppinsRegular from "../_common/fonts/PoppinsRegular";
 
 type Props = {
   video: IVideo;

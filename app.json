@@ -45,6 +45,18 @@
           "resizeMode": "contain",
           "backgroundColor": "#8D99AE"
         }
+      ],
+      [
+        "react-native-video",
+        {
+          "enableNotificationControls": true,
+          "androidExtensions": {
+            "useExoplayerRtsp": false,
+            "useExoplayerSmoothStreaming": false,
+            "useExoplayerHls": false,
+            "useExoplayerDash": false
+          }
+        }
       ]
     ],
     "experiments": {

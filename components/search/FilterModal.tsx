@@ -9,8 +9,8 @@ import { BOTTOM_TAB_HEIGHT } from "@/constants/navigation";
 //styles
 import { theme } from "@/constants/theme";
 //components
-import PoppinsRegular from "../fonts/PoppinsRegular";
-import PoppinsSemiBold from "../fonts/PoppinsSemiBold";
+import PoppinsRegular from "../_common/fonts/PoppinsRegular";
+import PoppinsSemiBold from "../_common/fonts/PoppinsSemiBold";
 
 type Props = {
   isModalVisible: boolean;

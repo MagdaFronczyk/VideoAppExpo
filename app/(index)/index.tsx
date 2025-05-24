@@ -7,8 +7,11 @@ import { moderateScale } from "react-native-size-matters";
 //styles
 import { theme } from "@/constants/theme";
 //components
-import PoppinsRegular from "@/components/fonts/PoppinsRegular";
-import PoppinsSemiBold from "@/components/fonts/PoppinsSemiBold";
+import PoppinsRegular from "@/components/_common/fonts/PoppinsRegular";
+import PoppinsSemiBold from "@/components/_common/fonts/PoppinsSemiBold";
+
+const logo = require("../../assets/images/logo.svg");
+const appIcon = require("../../assets/icons/app-icon.svg");
 
 const LogIn: React.FC = (): JSX.Element => {
   const router = useRouter();
@@ -32,14 +35,14 @@ const LogIn: React.FC = (): JSX.Element => {
       <Image
         accessibilityLabel="Logo"
         accessibilityHint="Application logo"
-        source={require("../../assets/images/logo.svg")}
+        source={logo}
         contentFit="cover"
         style={styles.logo}
       />
       <Image
         accessibilityLabel="Icon"
         accessibilityHint="Application icon"
-        source={require("../../assets/icons/app-icon.svg")}
+        source={appIcon}
         contentFit="cover"
         style={styles.icon}
       />

@@ -14,10 +14,12 @@ import { ICommonResponse } from "@/types/api";
 import { status } from "@/types/enums";
 import { IVideo } from "@/types/videos";
 //components
-import PoppinsRegular from "@/components/fonts/PoppinsRegular";
-import PoppinsSemiBold from "@/components/fonts/PoppinsSemiBold";
+import PoppinsRegular from "@/components/_common/fonts/PoppinsRegular";
+import PoppinsSemiBold from "@/components/_common/fonts/PoppinsSemiBold";
 import FilterModal from "@/components/search/FilterModal";
 import SearchResults from "@/components/search/SearchResults";
+
+const searchIcon = require("../../../assets/icons/search-icon.svg");
 
 const Search: React.FC = (): JSX.Element => {
   const { sortBy, query, maxResults, nextPageToken } = useLocalSearchParams();
@@ -142,7 +144,7 @@ const Search: React.FC = (): JSX.Element => {
         value={searchText}
       />
       <Image
-        source={require("../../../assets/icons/search-icon.svg")}
+        source={searchIcon}
         style={styles.searchIcon}
         contentFit="cover"
         accessibilityLabel="Search icon"
@@ -153,9 +155,15 @@ const Search: React.FC = (): JSX.Element => {
         <PoppinsSemiBold styles={styles.sortBy}>Most popular</PoppinsSemiBold>
       </Pressable>
       {sortByStr && queryStr && maxResultsStr && nextPageTokenStr ? (
-        <SearchResults videosResponse={moreVideosResponse} />
+        <SearchResults
+          videosResponse={moreVideosResponse}
+          searchText={searchText}
+        />
       ) : (
-        <SearchResults videosResponse={videosResponse} />
+        <SearchResults
+          videosResponse={videosResponse}
+          searchText={searchText}
+        />
       )}
       <FilterModal isModalVisible={isModalVisible} toggleModal={toggleModal} />
     </View>

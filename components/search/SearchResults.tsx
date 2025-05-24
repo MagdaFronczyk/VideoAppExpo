@@ -11,9 +11,13 @@ import VideoTile from "./VideoTile";
 
 type Props = {
   videosResponse: ICommonResponse<IVideo[] | null>;
+  searchText: string;
 };
 
-const SearchResults: React.FC<Props> = ({ videosResponse }): JSX.Element => {
+const SearchResults: React.FC<Props> = ({
+  videosResponse,
+  searchText,
+}): JSX.Element => {
   const keyExtractor = (item: IVideo): string => {
     return `${item.id.videoId}`;
   };
@@ -22,14 +26,11 @@ const SearchResults: React.FC<Props> = ({ videosResponse }): JSX.Element => {
     return <VideoTile video={item} />;
   };
 
-  if (videosResponse.data?.length && videosResponse.status === status.PENDING) {
+  if (searchText && videosResponse.status === status.PENDING) {
     return <CommonPending />;
   }
 
-  if (
-    videosResponse.data?.length &&
-    videosResponse.status === status.REJECTED
-  ) {
+  if (videosResponse.status === status.REJECTED) {
     return <CommonError />;
   }
 

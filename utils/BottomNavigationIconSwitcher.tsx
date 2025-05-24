@@ -1,7 +1,7 @@
 import React from "react";
 //components
-import { HomeIcon } from "@/components/icons/HomeIcon";
-import { SearchIcon } from "@/components/icons/SearchIcon";
+import { HomeIcon } from "@/components/_common/icons/HomeIcon";
+import { SearchIcon } from "@/components/_common/icons/SearchIcon";
 
 type Props = {
   label: string;

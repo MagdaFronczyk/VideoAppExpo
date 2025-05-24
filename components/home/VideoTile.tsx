@@ -3,7 +3,7 @@ import React, { JSX } from "react";
 import { StyleSheet, View } from "react-native";
 import { moderateScale } from "react-native-size-matters";
 //components
-import PoppinsMedium from "@/components/fonts/PoppinsMedium";
+import PoppinsMedium from "@/components/_common/fonts/PoppinsMedium";
 //styles
 import { theme } from "@/constants/theme";
 //types
