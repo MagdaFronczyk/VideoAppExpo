@@ -5,13 +5,14 @@ import {
 import * as React from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 //constants
-import { BOTTOM_TAB_HEIGHT } from "../../constants/navigation";
+import { BOTTOM_TAB_HEIGHT } from "../../../constants/navigation";
 //styles
-import { theme } from "../../constants/theme";
+import { theme } from "../../../constants/theme";
 //components
 import BottomNavigationIconSwitcher from "@/utils/BottomNavigationIconSwitcher";
 import BottomNavigationNameSwitcher from "@/utils/bottomNavigationNameSwitcher";
 import PoppinsMedium from "../fonts/PoppinsMedium";
+
 
 const BottomTabBars: React.FC<BottomTabBarProps> = ({
   state,

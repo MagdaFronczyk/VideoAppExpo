@@ -1,4 +1,4 @@
-import BottomTabBars from "@/components/navigation/BottomTabBars";
+import BottomTabBars from "@/components/_common/navigation/BottomTabBars";
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
 import { Tabs } from "expo-router";
 import React, { JSX } from "react";

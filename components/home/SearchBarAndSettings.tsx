@@ -4,9 +4,12 @@ import React, { JSX } from "react";
 import { Pressable, StyleSheet, View } from "react-native";
 import { moderateScale } from "react-native-size-matters";
 //components
-import PoppinsRegular from "@/components/fonts/PoppinsRegular";
+import PoppinsRegular from "@/components/_common/fonts/PoppinsRegular";
 //styles
 import { theme } from "@/constants/theme";
+
+const searchIcon = require("../../assets/icons/search-icon.svg");
+const settingsIcon = require("../../assets/icons/settings-icon.svg");
 
 const SearchBarAndSettings: React.FC = (): JSX.Element => {
   return (
@@ -21,7 +24,7 @@ const SearchBarAndSettings: React.FC = (): JSX.Element => {
       >
         <Pressable style={styles.pressableSearchBar}>
           <Image
-            source={require("../../assets/icons/search-icon.svg")}
+            source={searchIcon}
             style={styles.searchIcon}
             contentFit="cover"
             accessibilityLabel="Search icon"
@@ -41,7 +44,7 @@ const SearchBarAndSettings: React.FC = (): JSX.Element => {
       >
         <Pressable>
           <Image
-            source={require("../../assets/icons/settings-icon.svg")}
+            source={settingsIcon}
             style={styles.searchIcon}
             contentFit="cover"
             accessibilityLabel="Search icon"

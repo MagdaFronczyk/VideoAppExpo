@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import PoppinsRegular from "../fonts/PoppinsRegular";
+import PoppinsRegular from "./fonts/PoppinsRegular";
 //styles
 import { theme } from "@/constants/theme";
 

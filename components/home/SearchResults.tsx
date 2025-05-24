@@ -5,8 +5,8 @@ import { moderateScale } from "react-native-size-matters";
 //components
 import CommonError from "../_common/CommonError";
 import CommonPending from "../_common/CommonPending";
-import PoppinsRegular from "../fonts/PoppinsRegular";
-import PoppinsSemiBold from "../fonts/PoppinsSemiBold";
+import PoppinsRegular from "../_common/fonts/PoppinsRegular";
+import PoppinsSemiBold from "../_common/fonts/PoppinsSemiBold";
 import VideoTile from "./VideoTile";
 //types
 import { ICommonResponse } from "@/types/api";
