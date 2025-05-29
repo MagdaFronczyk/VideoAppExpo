@@ -16,7 +16,22 @@ const appIcon = require("../../assets/icons/app-icon.svg");
 const LogIn: React.FC = (): JSX.Element => {
   const router = useRouter();
 
-  const handleLogIn = () => {
+  const applicationImages = [
+    {
+      accessibilityLabel: "Logo",
+      accessibiltyHint: "Application logo",
+      source: logo,
+      style: styles.logo,
+    },
+    {
+      accessibilityLabel: "Icon",
+      accessibiltyHint: "Application icon",
+      source: appIcon,
+      style: styles.icon,
+    },
+  ];
+
+  const handleLogIn = (): void => {
     signInAnonymously(getAuth())
       .then(() => {
         router.navigate("./(logged-in)");
@@ -32,20 +47,18 @@ const LogIn: React.FC = (): JSX.Element => {
 
   return (
     <View style={styles.container}>
-      <Image
-        accessibilityLabel="Logo"
-        accessibilityHint="Application logo"
-        source={logo}
-        contentFit="cover"
-        style={styles.logo}
-      />
-      <Image
-        accessibilityLabel="Icon"
-        accessibilityHint="Application icon"
-        source={appIcon}
-        contentFit="cover"
-        style={styles.icon}
-      />
+      {applicationImages.map((appImage) => {
+        return (
+          <Image
+            key={appImage.accessibilityLabel}
+            accessibilityLabel={appImage.accessibilityLabel}
+            accessibilityHint={appImage.accessibiltyHint}
+            source={appImage.source}
+            contentFit="cover"
+            style={appImage.style}
+          />
+        );
+      })}
       <View style={styles.innerContainer}>
         <PoppinsSemiBold
           styles={{

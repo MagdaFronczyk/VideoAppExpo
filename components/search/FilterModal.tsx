@@ -9,35 +9,70 @@ import { BOTTOM_TAB_HEIGHT } from "@/constants/navigation";
 //styles
 import { theme } from "@/constants/theme";
 //components
+import sortVideosBySwitcher from "@/utils/sortVideosBySwitcher";
 import PoppinsRegular from "../_common/fonts/PoppinsRegular";
 import PoppinsSemiBold from "../_common/fonts/PoppinsSemiBold";
 
 type Props = {
   isModalVisible: boolean;
   toggleModal: () => void;
+  setFilter: React.Dispatch<React.SetStateAction<string>>;
 };
 
-const FilterModal: React.FC<Props> = ({ isModalVisible, toggleModal }) => {
+const FilterModal: React.FC<Props> = ({
+  isModalVisible,
+  toggleModal,
+  setFilter,
+}) => {
   const insets = useSafeAreaInsets();
   const [isCheckedDateLatest, setIsCheckedDateLatest] = useState(false);
   const [isCheckedDateOldest, setIsCheckedDateOldest] = useState(false);
   const [isCheckedPopular, setIsCheckedPopular] = useState(false);
 
+  const checkDateLatest = (): void => {
+    setIsCheckedDateLatest(true);
+    setIsCheckedDateOldest(false);
+    setIsCheckedPopular(false);
+  };
+
+  const checkDateOldest = (): void => {
+    setIsCheckedDateOldest(true);
+    setIsCheckedDateLatest(false);
+    setIsCheckedPopular(false);
+  };
+
+  const checkPopular = (): void => {
+    setIsCheckedPopular(true);
+    setIsCheckedDateOldest(false);
+    setIsCheckedDateLatest(false);
+  };
+
+  const handleSubmit = (): void => {
+    toggleModal();
+    setFilter(
+      sortVideosBySwitcher(
+        isCheckedDateLatest,
+        isCheckedDateOldest,
+        isCheckedPopular
+      )
+    );
+  };
+
   const filterData = [
     {
       title: "Upload date: latest",
       isChecked: isCheckedDateLatest,
-      setIsChecked: setIsCheckedDateLatest,
+      setIsChecked: checkDateLatest,
     },
     {
       title: "Upload date: oldest",
       isChecked: isCheckedDateOldest,
-      setIsChecked: setIsCheckedDateOldest,
+      setIsChecked: checkDateOldest,
     },
     {
       title: "Most popular",
       isChecked: isCheckedPopular,
-      setIsChecked: setIsCheckedPopular,
+      setIsChecked: checkPopular,
     },
   ];
 
@@ -65,12 +100,10 @@ const FilterModal: React.FC<Props> = ({ isModalVisible, toggleModal }) => {
                 isChecked={filter.isChecked}
                 fillColor={theme.color.darkBlue}
                 size={moderateScale(24)}
+                onPress={filter.setIsChecked}
                 iconStyle={{
                   borderColor: theme.color.darkBlue,
                   borderWidth: moderateScale(2),
-                }}
-                onPress={() => {
-                  filter.setIsChecked(!filter.isChecked);
                 }}
               />
               <PoppinsRegular styles={styles.filter}>
@@ -82,7 +115,7 @@ const FilterModal: React.FC<Props> = ({ isModalVisible, toggleModal }) => {
         <Pressable
           accessibilityLabel="Close filter modal"
           accessibilityHint="Closes filter modal"
-          onPress={toggleModal}
+          onPress={handleSubmit}
           style={styles.button}
         >
           <PoppinsSemiBold styles={styles.confirm}>Confirm</PoppinsSemiBold>

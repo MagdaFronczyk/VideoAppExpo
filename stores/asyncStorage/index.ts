@@ -1,7 +1,7 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 //types
 import { STORAGE_KEY } from "@/types/enums";
-import { note } from "@/types/notes";
+import { Inote } from "@/types/notes";
 
 export const getAsyncNotesData = async () => {
   try {
@@ -12,9 +12,10 @@ export const getAsyncNotesData = async () => {
   }
 };
 
-export const storeCommentData = async (note: note) => {
+export const storeCommentData = async (note: Inote) => {
   try {
-    const notesAsyncStorage: note[] | null = await getAsyncNotesData();
+    const notesAsyncStorage: Inote[] | null = await getAsyncNotesData();
+    console.log(notesAsyncStorage);
     await AsyncStorage.setItem(
       STORAGE_KEY.VIDEO_NOTE,
       notesAsyncStorage
@@ -27,10 +28,11 @@ export const storeCommentData = async (note: note) => {
 };
 
 export const getAndSetComments = async (
-  setComments: React.Dispatch<React.SetStateAction<note[]>>
+  setComments: React.Dispatch<React.SetStateAction<Inote[]>>
 ): Promise<void> => {
   try {
-    const notesAsyncStorage: note[] = await getAsyncNotesData();
+    const notesAsyncStorage: Inote[] = await getAsyncNotesData();
+    console.log("get and set", notesAsyncStorage);
     if (notesAsyncStorage !== null) {
       setComments(notesAsyncStorage);
     }

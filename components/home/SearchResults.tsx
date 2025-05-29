@@ -1,5 +1,5 @@
 import { Link } from "expo-router";
-import React, { JSX, useEffect, useState } from "react";
+import React, { JSX, useCallback, useEffect, useState } from "react";
 import { FlatList, Pressable, StyleSheet, View } from "react-native";
 import { moderateScale } from "react-native-size-matters";
 //components
@@ -78,9 +78,10 @@ const SearchResults: React.FC<Props> = ({
     return `${item.id.videoId}`;
   };
 
-  const renderItem = ({ item }: { item: IVideo }): JSX.Element => {
-    return <VideoTile video={item} />;
-  };
+  const renderItem = useCallback(
+    ({ item }: { item: IVideo }) => <VideoTile video={item} />,
+    []
+  );
 
   if (videosResponse.status === status.PENDING) {
     return <CommonPending />;

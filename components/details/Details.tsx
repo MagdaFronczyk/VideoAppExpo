@@ -7,12 +7,12 @@ import PoppinsSemiBold from "@/components/_common/fonts/PoppinsSemiBold";
 //styles
 import { theme } from "@/constants/theme";
 //types
-import { IVideo } from "@/types/videos";
+import { IVideoDetails } from "@/types/video";
 import { ScreenIcon } from "../_common/icons/ScreenIcon";
 import { ThumbIcon } from "../_common/icons/ThumbIcon";
 
 type Props = {
-  video: IVideo;
+  video: IVideoDetails;
 };
 
 const Details: React.FC<Props> = ({ video }): JSX.Element => {
@@ -28,9 +28,15 @@ const Details: React.FC<Props> = ({ video }): JSX.Element => {
       <View style={styles.statisticsContainer}>
         <View style={styles.innerContainer}>
           <ScreenIcon />
+          <PoppinsSemiBold
+            styles={styles.statististicText}
+          >{`${video.statistics.viewCount} views`}</PoppinsSemiBold>
         </View>
         <View style={styles.innerContainer}>
           <ThumbIcon />
+          <PoppinsSemiBold
+            styles={styles.statististicText}
+          >{`${video.statistics.likeCount} likes`}</PoppinsSemiBold>
         </View>
       </View>
     </>
@@ -64,7 +70,13 @@ const styles = StyleSheet.create({
     height: moderateScale(32),
     backgroundColor: theme.color.darkBlue,
     borderRadius: moderateScale(8),
-    justifyContent: "center",
+    alignItems: "center",
     paddingLeft: moderateScale(5),
+    flexDirection: "row",
+  },
+  statististicText: {
+    fontSize: theme.fontSize.ten,
+    color: theme.color.white,
+    margin: "auto",
   },
 });

@@ -1,1 +1,1 @@
-export type note = string;
+export type Inote = string;

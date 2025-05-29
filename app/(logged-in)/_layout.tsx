@@ -6,7 +6,7 @@ const LoggedInLayout: React.FC = (): JSX.Element => {
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="(tabs)" />
       <Stack.Screen name="(settings)" />
-      <Stack.Screen name="(detailsModal)" />
+      <Stack.Screen name="(detailsModal)" options={{ presentation: "modal" }} />
     </Stack>
   );
 };
