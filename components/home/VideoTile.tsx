@@ -1,5 +1,6 @@
+/* eslint-disable react/display-name */
 import { Image } from "expo-image";
-import React, { JSX } from "react";
+import React, { memo } from "react";
 import { StyleSheet, View } from "react-native";
 import { moderateScale } from "react-native-size-matters";
 //components
@@ -9,20 +10,24 @@ import { theme } from "@/constants/theme";
 //types
 import { IVideo } from "@/types/videos";
 
-type Props = {
-  video: IVideo;
-};
-
-const VideoTile: React.FC<Props> = ({ video }): JSX.Element => {
-  return (
+const VideoTile = memo(
+  ({ video }: { video: IVideo }) => (
     <View>
       <Image source={video.snippet.thumbnails.high.url} style={styles.image} />
       <PoppinsMedium numberOfLines={2} styles={styles.description}>
         {video.snippet.description}
       </PoppinsMedium>
     </View>
-  );
-};
+  ),
+  (prevProps, nextProps) => {
+    return (
+      prevProps.video.snippet.thumbnails.high.url ===
+        nextProps.video.snippet.thumbnails.high.url &&
+      prevProps.video.snippet.description ===
+        nextProps.video.snippet.description
+    );
+  }
+);
 
 export default VideoTile;
 

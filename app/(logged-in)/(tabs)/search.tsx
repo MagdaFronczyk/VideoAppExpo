@@ -38,7 +38,7 @@ const Search: React.FC = (): JSX.Element => {
     useState<ICommonResponse<IVideo[] | null>>(COMMON_INIT_RESPONSE);
   const [moreVideosResponse, setMoreVideosResponse] =
     useState<ICommonResponse<IVideo[] | null>>(COMMON_INIT_RESPONSE);
-  const [filterBy, setFilterBy] = useState<string>("rating");
+  const [filterBy, setFilterBy] = useState<string>("Most Popular");
 
   const toggleModal = () => {
     setModalVisible(!isModalVisible);
@@ -152,20 +152,20 @@ const Search: React.FC = (): JSX.Element => {
       />
       <Pressable onPress={toggleModal} style={styles.sortContainer}>
         <PoppinsRegular styles={styles.sortBy}>Sort by:</PoppinsRegular>
-        <PoppinsSemiBold styles={styles.sortBy}>Most popular</PoppinsSemiBold>
+        <PoppinsSemiBold styles={styles.sortBy}>{filterBy}</PoppinsSemiBold>
       </Pressable>
-      {sortByStr && queryStr && maxResultsStr && nextPageTokenStr ? (
+      <SearchResults videosResponse={videosResponse} searchText={searchText} />
+      {sortByStr && queryStr && maxResultsStr && nextPageTokenStr && (
         <SearchResults
           videosResponse={moreVideosResponse}
           searchText={searchText}
         />
-      ) : (
-        <SearchResults
-          videosResponse={videosResponse}
-          searchText={searchText}
-        />
       )}
-      <FilterModal isModalVisible={isModalVisible} toggleModal={toggleModal} />
+      <FilterModal
+        isModalVisible={isModalVisible}
+        toggleModal={toggleModal}
+        setFilter={setFilterBy}
+      />
     </View>
   );
 };

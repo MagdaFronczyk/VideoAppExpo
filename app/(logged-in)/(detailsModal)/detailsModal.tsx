@@ -9,7 +9,7 @@ import { getYouTubeVideoDetails } from "@/api/geYouTubetVideoDetails";
 import { ICommonResponse } from "@/types/api";
 //types
 import { status } from "@/types/enums";
-import { IVideo } from "@/types/videos";
+import { IVideoDetails } from "@/types/video";
 //components
 import CommonError from "@/components/_common/CommonError";
 import CommonPending from "@/components/_common/CommonPending";
@@ -21,11 +21,11 @@ import DetailsTab from "@/components/details/DetailsTab";
 import { theme } from "@/constants/theme";
 
 const movieUri =
-  "https://bitmovin-a.akamaihd.net/content/sintel/hls/playlist.m3u8";
+  "https://bitmovin-a.akamaihd.net/content/sintel/hls/playlist.m3u8.";
 
 const DetailsModal: React.FC = (): JSX.Element => {
   const [videoResponse, setVideoResponse] =
-    useState<ICommonResponse<IVideo[] | null>>(COMMON_INIT_RESPONSE);
+    useState<ICommonResponse<IVideoDetails | null>>(COMMON_INIT_RESPONSE);
 
   const { videoId } = useLocalSearchParams();
 
@@ -64,8 +64,6 @@ const DetailsModal: React.FC = (): JSX.Element => {
     return <CommonError />;
   }
 
-  const video = videoResponse.data[6];
-
   return (
     <ScrollView style={styles.container}>
       <Video
@@ -76,17 +74,17 @@ const DetailsModal: React.FC = (): JSX.Element => {
       />
       <View style={styles.innerContainer}>
         <PoppinsSemiBold numberOfLines={1} styles={styles.title}>
-          {video.snippet.title}
+          {videoResponse.data.snippet.title}
         </PoppinsSemiBold>
         <View style={styles.channelContainer}>
           <View style={styles.personIcon}>
             <PersonIcon />
           </View>
           <PoppinsBold styles={styles.channelTitle}>
-            {video.snippet.channelTitle}
+            {videoResponse.data.snippet.channelTitle}
           </PoppinsBold>
         </View>
-        <DetailsTab video={video} />
+        <DetailsTab video={videoResponse.data} />
       </View>
     </ScrollView>
   );

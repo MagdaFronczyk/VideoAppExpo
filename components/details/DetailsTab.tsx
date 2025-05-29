@@ -8,10 +8,10 @@ import Notes from "./Notes";
 //styles
 import { theme } from "@/constants/theme";
 //types
-import { IVideo } from "@/types/videos";
+import { IVideoDetails } from "@/types/video";
 
 type Props = {
-  video: IVideo;
+  video: IVideoDetails;
 };
 
 const DetailsTab: React.FC<Props> = ({ video }): JSX.Element => {
@@ -70,14 +70,17 @@ export default DetailsTab;
 const styles = StyleSheet.create({
   detailsTabsContainer: {
     flexDirection: "row",
-    justifyContent: "space-evenly",
+    justifyContent: "center",
+    flex: 1,
   },
   details: {
     fontSize: moderateScale(12),
     color: theme.color.darkBlue,
+    textAlign: "center",
   },
   detailsLine: {
     borderWidth: moderateScale(2),
+    width: moderateScale(170),
   },
   detailsContainer: {
     paddingHorizontal: moderateScale(16),

@@ -1,4 +1,4 @@
-import React, { JSX } from "react";
+import React, { JSX, useCallback } from "react";
 import { FlatList } from "react-native";
 //types
 import { ICommonResponse } from "@/types/api";
@@ -22,9 +22,10 @@ const SearchResults: React.FC<Props> = ({
     return `${item.id.videoId}`;
   };
 
-  const renderItem = ({ item }: { item: IVideo }): JSX.Element => {
-    return <VideoTile video={item} />;
-  };
+  const renderItem = useCallback(
+    ({ item }: { item: IVideo }) => <VideoTile video={item} />,
+    []
+  );
 
   if (searchText && videosResponse.status === status.PENDING) {
     return <CommonPending />;

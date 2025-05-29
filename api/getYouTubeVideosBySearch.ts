@@ -1,4 +1,5 @@
-import { API_KEY, COMMON_ERROR_REPONSE, YOU_TUBE_API_INSTANCE } from ".";
+import { searchMockup } from "@/constants/mockups";
+import { API_KEY, YOU_TUBE_API_INSTANCE } from ".";
 //types
 import { ICommonResponse } from "@/types/api";
 import { status } from "@/types/enums";
@@ -32,6 +33,10 @@ export const getYouTubeVideosBySearch = (
       });
     })
     .catch(() => {
-      setResponse(COMMON_ERROR_REPONSE);
+      // setResponse(COMMON_ERROR_REPONSE);
+      setResponse({
+        status: status.RESOLVED,
+        data: searchMockup.items,
+      });
     });
 };

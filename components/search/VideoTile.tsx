@@ -1,7 +1,8 @@
+/* eslint-disable react/display-name */
 import dayjs from "dayjs";
 import { Image } from "expo-image";
 import { Link } from "expo-router";
-import React from "react";
+import React, { memo } from "react";
 import { Pressable, StyleSheet } from "react-native";
 import { moderateScale } from "react-native-size-matters";
 //constants
@@ -12,15 +13,11 @@ import { IVideo } from "@/types/videos";
 import PoppinsBold from "../_common/fonts/PoppinsBold";
 import PoppinsRegular from "../_common/fonts/PoppinsRegular";
 
-type Props = {
-  video: IVideo;
-};
-
-const VideoTile: React.FC<Props> = ({ video }) => {
-  return (
+const VideoTile = memo(
+  ({ video }: { video: IVideo }) => (
     <Link
       href={{
-        pathname: "../../(detailsModal)",
+        pathname: "../../(detailsModal)/detailsModal",
         params: { videoId: video.id.videoId },
       }}
       asChild
@@ -47,8 +44,21 @@ const VideoTile: React.FC<Props> = ({ video }) => {
         </PoppinsRegular>
       </Pressable>
     </Link>
-  );
-};
+  ),
+  (prevProps, nextProps) => {
+    return (
+      prevProps.video.id.videoId === nextProps.video.id.videoId &&
+      prevProps.video.snippet.thumbnails.high.url ===
+        nextProps.video.snippet.thumbnails.high.url &&
+      prevProps.video.snippet.channelTitle ===
+        nextProps.video.snippet.channelTitle &&
+      prevProps.video.snippet.description ===
+        nextProps.video.snippet.description &&
+      prevProps.video.snippet.publishedAt ===
+        nextProps.video.snippet.publishedAt
+    );
+  }
+);
 
 export default VideoTile;
 
