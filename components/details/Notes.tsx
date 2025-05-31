@@ -1,24 +1,25 @@
 import React, { JSX, useState } from "react";
-import { Pressable, StyleSheet, TextInput, View } from "react-native";
+import { Pressable, StyleSheet, TextInput } from "react-native";
+import { useFocusEffect } from "expo-router";
 import { moderateScale } from "react-native-size-matters";
 //components
-import PoppinsRegular from "../_common/fonts/PoppinsRegular";
-import PoppinsSemiBold from "../_common/fonts/PoppinsSemiBold";
+import Note from "./Note";
+import PoppinsSemiBold from "@/components/_common/fonts/PoppinsSemiBold";
+//store
+import { getAndSetComments, storeCommentData } from "@/stores/asyncStorage";
 //styles
 import { theme } from "@/constants/theme";
-//stores
-import { getAndSetComments, storeCommentData } from "@/stores/asyncStorage";
 //types
-import { Inote } from "@/types/notes";
+import { INote } from "@/types/notes";
 
 const Notes: React.FC = (): JSX.Element => {
-  const [note, setNote] = useState<Inote>("");
-  const [notesResponse, setNotesResponse] = useState<string[] | []>([]);
+  const [notesResponse, setNotesResponse] = useState<INote[] | []>([]);
+  const [note, setNote] = useState<string>("");
 
   const handleAddNote = async () => {
-    if (note.length > 0) {
+    if (note) {
       try {
-        await storeCommentData(note);
+        await storeCommentData({ note: note });
         setNote("");
         await getAndSetComments(setNotesResponse);
       } catch (error) {
@@ -26,17 +27,17 @@ const Notes: React.FC = (): JSX.Element => {
       }
     }
   };
+  useFocusEffect(
+    React.useCallback(() => {
+      getAndSetComments(setNotesResponse);
+    }, [])
+  );
 
   return (
-    <View style={styles.container}>
-      {notesResponse.length &&
-        notesResponse.map((note) => {
-          return (
-            <View style={styles.noteContainer} key={note}>
-              <PoppinsRegular styles={styles.note}>{note}</PoppinsRegular>
-            </View>
-          );
-        })}
+    <>
+      {notesResponse.map((note) => {
+        return <Note note={note} key={note.note} />;
+      })}
       <TextInput
         onChangeText={setNote}
         value={note}
@@ -51,16 +52,13 @@ const Notes: React.FC = (): JSX.Element => {
       >
         <PoppinsSemiBold styles={styles.addNote}>Add note</PoppinsSemiBold>
       </Pressable>
-    </View>
+    </>
   );
 };
 
 export default Notes;
 
 const styles = StyleSheet.create({
-  container: {
-    justifyContent: "center",
-  },
   textInput: {
     width: "100%",
     height: moderateScale(50),
@@ -70,7 +68,6 @@ const styles = StyleSheet.create({
     fontFamily: "Poppins-Regular",
     paddingLeft: moderateScale(5),
     bottom: moderateScale(0),
-    position: "absolute",
   },
   button: {
     width: moderateScale(256),
@@ -86,14 +83,4 @@ const styles = StyleSheet.create({
     color: theme.color.white,
     fontSize: theme.fontSize.fourteen,
   },
-  noteContainer: {
-    width: "100%",
-    height: moderateScale(50),
-    borderRadius: moderateScale(12),
-    borderWidth: moderateScale(2),
-    borderColor: theme.color.lightGray,
-    padding: moderateScale(5),
-    marginBottom: moderateScale(10),
-  },
-  note: { fontSize: theme.fontSize.twelve, color: theme.color.darkBlue },
 });

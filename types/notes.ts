@@ -1,1 +1,1 @@
-export type Inote = string;
+export type INote = { note: string };

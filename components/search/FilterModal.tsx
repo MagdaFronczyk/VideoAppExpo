@@ -130,7 +130,7 @@ export default FilterModal;
 const styles = StyleSheet.create({
   customBackDrop: {
     flex: 1,
-    backgroundColor: "black",
+    backgroundColor: theme.color.black,
   },
   modal: {
     width: moderateScale(320),
