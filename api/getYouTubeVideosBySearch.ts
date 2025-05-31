@@ -17,8 +17,16 @@ export const getYouTubeVideosBySearch = (
     React.SetStateAction<IVideoResponse["nextPageToken"]>
   >
 ): void => {
+  let orderBy;
+  if (sortBy === "Most popular") {
+    orderBy = "rating";
+  } else if (sortBy === "Upload date: latest") {
+    orderBy = "date";
+  } else if (sortBy === "Upload date: oldest") {
+    orderBy = "date";
+  }
   YOU_TUBE_API_INSTANCE.get<IVideoResponse>(
-    `/search?key=${API_KEY}&part=snippet&q=${query}&orderBy=${sortBy}&maxResults=${maxResults}`,
+    `/search?key=${API_KEY}&part=snippet&q=${query}&orderBy=${orderBy}&maxResults=${maxResults}`,
     {
       signal: abortController.signal,
     }
@@ -26,6 +34,14 @@ export const getYouTubeVideosBySearch = (
     .then((response) => {
       if (setNextPageToken) {
         setNextPageToken(response.data.nextPageToken);
+      }
+      if (sortBy === "Upload date: oldest") {
+        const reversed = [...response.data.items].reverse();
+        setResponse({
+          status: status.RESOLVED,
+          data: reversed,
+        });
+        return;
       }
       setResponse({
         status: status.RESOLVED,

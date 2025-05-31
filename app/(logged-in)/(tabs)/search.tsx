@@ -154,10 +154,14 @@ const Search: React.FC = (): JSX.Element => {
         <PoppinsRegular styles={styles.sortBy}>Sort by:</PoppinsRegular>
         <PoppinsSemiBold styles={styles.sortBy}>{filterBy}</PoppinsSemiBold>
       </Pressable>
-      <SearchResults videosResponse={videosResponse} searchText={searchText} />
-      {sortByStr && queryStr && maxResultsStr && nextPageTokenStr && (
+      {sortByStr && queryStr && maxResultsStr && nextPageTokenStr ? (
         <SearchResults
           videosResponse={moreVideosResponse}
+          searchText={searchText}
+        />
+      ) : (
+        <SearchResults
+          videosResponse={videosResponse}
           searchText={searchText}
         />
       )}

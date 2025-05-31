@@ -79,7 +79,7 @@ const FilterModal: React.FC<Props> = ({
   return (
     <Modal
       isVisible={isModalVisible}
-      style={{ margin: "auto" }}
+      style={styles.container}
       customBackdrop={
         <View
           style={[
@@ -128,6 +128,7 @@ const FilterModal: React.FC<Props> = ({
 export default FilterModal;
 
 const styles = StyleSheet.create({
+  container: { margin: "auto" },
   customBackDrop: {
     flex: 1,
     backgroundColor: theme.color.black,
