@@ -71,7 +71,6 @@ const styles = StyleSheet.create({
   detailsTabsContainer: {
     flexDirection: "row",
     justifyContent: "center",
-    flex: 1,
   },
   details: {
     fontSize: moderateScale(12),
