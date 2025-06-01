@@ -84,11 +84,12 @@ const Search: React.FC = (): JSX.Element => {
 
   useEffect(() => {
     const abortController = new AbortController();
+    console.log("more", filterBy);
     if (sortByStr && queryStr && maxResultsStr && nextPageTokenStr) {
       getMoreYouTubeVideosBySearch(
         setMoreVideosResponse,
         abortController,
-        sortByStr,
+        filterBy ? filterBy : sortByStr,
         queryStr,
         Number(maxResultsStr),
         nextPageTokenStr
@@ -97,7 +98,7 @@ const Search: React.FC = (): JSX.Element => {
         abortController.abort();
       };
     }
-  }, [sortByStr, queryStr, maxResultsStr, nextPageTokenStr]);
+  }, [sortByStr, queryStr, maxResultsStr, nextPageTokenStr, filterBy]);
 
   useEffect(() => {
     const abortController = new AbortController();
@@ -113,7 +114,7 @@ const Search: React.FC = (): JSX.Element => {
         getMoreYouTubeVideosBySearch(
           setMoreVideosResponse,
           abortController,
-          sortByStr,
+          filterBy ? filterBy : sortByStr,
           queryStr,
           Number(maxResultsStr),
           nextPageTokenStr
@@ -154,14 +155,14 @@ const Search: React.FC = (): JSX.Element => {
         <PoppinsRegular styles={styles.sortBy}>Sort by:</PoppinsRegular>
         <PoppinsSemiBold styles={styles.sortBy}>{filterBy}</PoppinsSemiBold>
       </Pressable>
-      {sortByStr && queryStr && maxResultsStr && nextPageTokenStr ? (
+      {searchText ? (
         <SearchResults
-          videosResponse={moreVideosResponse}
+          videosResponse={videosResponse}
           searchText={searchText}
         />
       ) : (
         <SearchResults
-          videosResponse={videosResponse}
+          videosResponse={moreVideosResponse}
           searchText={searchText}
         />
       )}
