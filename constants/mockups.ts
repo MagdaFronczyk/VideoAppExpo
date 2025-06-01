@@ -1768,3 +1768,5 @@ export const searchMockup: IVideoResponse = {
     },
   ],
 };
+
+export const detailsMockup = [];

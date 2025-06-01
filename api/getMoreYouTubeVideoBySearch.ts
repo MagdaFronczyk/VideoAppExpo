@@ -15,24 +15,80 @@ export const getMoreYouTubeVideosBySearch = (
   maxResults: number,
   nextPageToken: string
 ): void => {
+  let orderBy;
+  if (sortBy === "Most popular") {
+    orderBy = "rating";
+  } else if (sortBy === "Upload date: latest") {
+    orderBy = "date";
+  } else if (sortBy === "Upload date: oldest") {
+    orderBy = "date";
+  }
   YOU_TUBE_API_INSTANCE.get<IVideoResponse>(
-    `/search?key=${API_KEY}&part=snippet&q=${query}&orderBy=${sortBy}&maxResults=${maxResults}&pageToken=${nextPageToken}`,
+    `/search?key=${API_KEY}&part=snippet&q=${query}&orderBy=${orderBy}&maxResults=${maxResults}&pageToken=${nextPageToken}`,
     {
       signal: abortController.signal,
     }
   )
     .then((response) => {
+      if (sortBy === "Upload date: oldest") {
+        const oldest = [...response.data.items].sort(function (a, b) {
+          return (
+            new Date(a.snippet.publishTime).getTime() -
+            new Date(b.snippet.publishTime).getTime()
+          );
+        });
+        setResponse({
+          status: status.RESOLVED,
+          data: oldest,
+        });
+        return;
+      }
+      if (sortBy === "Upload date: latest") {
+        const newest = [...response.data.items].sort(function (a, b) {
+          return (
+            new Date(b.snippet.publishTime).getTime() -
+            new Date(a.snippet.publishTime).getTime()
+          );
+        });
+        setResponse({
+          status: status.RESOLVED,
+          data: newest,
+        });
+        return;
+      }
       setResponse({
         status: status.RESOLVED,
         data: response.data.items,
       });
-      // setResponse({
-      //   status: status.RESOLVED,
-      //   data: searchMockup.items,
-      // });
     })
     .catch(() => {
       // setResponse(COMMON_ERROR_REPONSE);
+      if (sortBy === "Upload date: oldest") {
+        const oldest = [...searchMockup.items].sort(function (a, b) {
+          return (
+            new Date(a.snippet.publishTime).getTime() -
+            new Date(b.snippet.publishTime).getTime()
+          );
+        });
+        setResponse({
+          status: status.RESOLVED,
+          data: oldest,
+        });
+        return;
+      }
+      if (sortBy === "Upload date: latest") {
+        const newest = [...searchMockup.items].sort(function (a, b) {
+          return (
+            new Date(b.snippet.publishTime).getTime() -
+            new Date(a.snippet.publishTime).getTime()
+          );
+        });
+        setResponse({
+          status: status.RESOLVED,
+          data: newest,
+        });
+        return;
+      }
       setResponse({
         status: status.RESOLVED,
         data: searchMockup.items,

@@ -25,6 +25,7 @@ export const getYouTubeVideosBySearch = (
   } else if (sortBy === "Upload date: oldest") {
     orderBy = "date";
   }
+
   YOU_TUBE_API_INSTANCE.get<IVideoResponse>(
     `/search?key=${API_KEY}&part=snippet&q=${query}&orderBy=${orderBy}&maxResults=${maxResults}`,
     {
@@ -36,10 +37,28 @@ export const getYouTubeVideosBySearch = (
         setNextPageToken(response.data.nextPageToken);
       }
       if (sortBy === "Upload date: oldest") {
-        const reversed = [...response.data.items].reverse();
+        const oldest = [...response.data.items].sort(function (a, b) {
+          return (
+            new Date(a.snippet.publishTime).getTime() -
+            new Date(b.snippet.publishTime).getTime()
+          );
+        });
         setResponse({
           status: status.RESOLVED,
-          data: reversed,
+          data: oldest,
+        });
+        return;
+      }
+      if (sortBy === "Upload date: latest") {
+        const newest = [...response.data.items].sort(function (a, b) {
+          return (
+            new Date(b.snippet.publishTime).getTime() -
+            new Date(a.snippet.publishTime).getTime()
+          );
+        });
+        setResponse({
+          status: status.RESOLVED,
+          data: newest,
         });
         return;
       }
@@ -50,6 +69,35 @@ export const getYouTubeVideosBySearch = (
     })
     .catch(() => {
       // setResponse(COMMON_ERROR_REPONSE);
+      if (setNextPageToken) {
+        setNextPageToken("CBQQAA");
+      }
+      if (sortBy === "Upload date: oldest") {
+        const oldest = [...searchMockup.items].sort(function (a, b) {
+          return (
+            new Date(a.snippet.publishTime).getTime() -
+            new Date(b.snippet.publishTime).getTime()
+          );
+        });
+        setResponse({
+          status: status.RESOLVED,
+          data: oldest,
+        });
+        return;
+      }
+      if (sortBy === "Upload date: latest") {
+        const newest = [...searchMockup.items].sort(function (a, b) {
+          return (
+            new Date(b.snippet.publishTime).getTime() -
+            new Date(a.snippet.publishTime).getTime()
+          );
+        });
+        setResponse({
+          status: status.RESOLVED,
+          data: newest,
+        });
+        return;
+      }
       setResponse({
         status: status.RESOLVED,
         data: searchMockup.items,
